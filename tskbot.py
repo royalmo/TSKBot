@@ -32,7 +32,7 @@ class TskBot(discord.Client):
         if ('http://' in message.content or 'https://' in message.content) and message.author.roles[0].position == 0:
             await message.delete()
 
-    
+
 if __name__ == "__main__":
 
     # Welcome message
@@ -44,11 +44,7 @@ if __name__ == "__main__":
         DISCORD_TOKEN = filein['token']
         DISCORD_GUILD = filein['guild']
 
-    # Runs bot loop
-    while True: # Even if connection error, retry the connectivity
-        try:
-            mainbot = TskBot()
-            mainbot.run(DISCORD_TOKEN)
-        except:
-            print("Execution error, waiting 10 seconds, and retrying.")
-            sleep(10)
+    # Runs bot after 30 seconds of delay. Why we do this? Because when raspi boots, network is ready some seconds after rc.local is executed, so if we don't wait the program crashes.
+    sleep(30)
+    mainbot = TskBot()
+    mainbot.run(DISCORD_TOKEN)
