@@ -6,6 +6,7 @@
 # Importing stuff
 import json
 import discord
+from pathlib import Path
 
 def get_path(): # Returns main.py file path
     return str(Path(__file__).parent.absolute()) + "/"
