@@ -7,6 +7,7 @@
 import json
 import discord
 from pathlib import Path
+from time import sleep
 
 def get_path(): # Returns main.py file path
     return str(Path(__file__).parent.absolute()) + "/"
@@ -44,5 +45,10 @@ if __name__ == "__main__":
         DISCORD_GUILD = filein['guild']
 
     # Runs bot loop
-    mainbot = TskBot()
-    mainbot.run(DISCORD_TOKEN)
+    while True: # Even if connection error, retry the connectivity
+        try:
+            mainbot = TskBot()
+            mainbot.run(DISCORD_TOKEN)
+        except:
+            print("Execution error, waiting 10 seconds, and retrying.")
+            sleep(10)
