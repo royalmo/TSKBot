@@ -21,7 +21,7 @@ class TskBot(discord.Client):
         print(f'Connected to Discord!\n\nBot username: {self.user}\n\nServer: {self.guild.name}\nServer id: {self.guild.id}')
 
         # Make banning web role list.
-        self.nw_role = [self.guild.get_role(NW_ROLE_ID)]
+        self.nw_role = [self.guild.get_role(EV_ROLE_ID), self.guild.get_role(NW_ROLE_ID)]
 
         # Setting Watching status
         await self.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Telecinco"))
@@ -35,7 +35,7 @@ class TskBot(discord.Client):
         if ('http://' in message.content or 'https://' in message.content) and message.author.roles == self.nw_role:
             await message.delete()
 
-            response = await message.channel.send(f"No tienes permiso para poner enlaces, {message.author.mention}. Si tienes permiso especial, habla con un moderador.")
+            response = await message.channel.send(f"{message.author.mention} casi crak, aun debes ascender.")
             await response.delete(delay=10)
 
 
@@ -49,6 +49,7 @@ if __name__ == "__main__":
         filein = json.loads(json_token.read())
         DISCORD_TOKEN = filein['token']
         DISCORD_GUILD = filein['guild']
+        EV_ROLE_ID = filein['everyone-role-id']
         NW_ROLE_ID = filein['newwie-role-id']
 
     # Runs bot after 30 seconds of delay. Why we do this? Because when raspi boots, network is ready some seconds after rc.local is executed, so if we don't wait the program crashes.
